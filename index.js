@@ -98,7 +98,7 @@
           mark = {};
         }
         mark.lastUri = path;
-        mark.scrollTop = top;
+        mark[path] = top;
         storage.setItem('bookmark', JSON.stringify(mark));
         link.animate({ top: -26}, 'fast', function () {
           setTimeout(function () {
@@ -108,14 +108,14 @@
         return false;
       });
 
-      // only scroll page with the specified hash
-      if (global.location.hash !== '#book:mark') {
+      // // only scroll page with the specified hash
+      // if (global.location.hash !== '#book:mark') {
+      //   return;
+      // }
+      if (mark == null) {
         return;
       }
-      if (mark == null || mark.lastUri !== path) {
-        return;
-      }
-      var top = mark.scrollTop;
+      var top = mark[path];
       if (!isNaN(top)) {
         $(function () {
           $(global.document.documentElement)
