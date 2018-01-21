@@ -86,40 +86,51 @@
     });
   };
 
-  var scrollToMark = function () {
+  var doScroll = function (top) {
+    if (!isNaN(top)) {
+      $(function () {
+        // eslint-disable-next-line max-len
+        $(global.document.documentElement).animate({ 'scrollTop': top }, 'fast');
+      });
+    }
+  };
+
+  var doSaveScroll = function (path, mark) {
+    if (mark == null) {
+      mark = {};
+    }
+    var top = global.document.documentElement.scrollTop;
+    mark.lastUri = path;
+    mark[path] = top;
+    storage.setItem('bookmark', JSON.stringify(mark));
+    link.animate({ top: -26 }, 'fast', function () {
+      setTimeout(function () {
+        link.css('top', '');
+      }, 400);
+    });
+    return mark;
+  };
+
+  var scrollToMark = function (trigger) {
     var path = global.location.pathname;
     var mark = getBookmark();
     $(function () {
       init();
-      // register click event
+      // save the position by clicking the icon
       link.click(function () {
-        var top = global.document.documentElement.scrollTop;
-        if (mark == null) {
-          mark = {};
-        }
-        mark.lastUri = path;
-        mark[path] = top;
-        storage.setItem('bookmark', JSON.stringify(mark));
-        link.animate({ top: -26}, 'fast', function () {
-          setTimeout(function () {
-            link.css('top', '');
-          }, 400);
-        });
+        mark = doSaveScroll(path, mark);
         return false;
       });
 
-      // // only scroll page with the specified hash
-      // if (global.location.hash !== '#book:mark') {
-      //   return;
-      // }
+      // auto scroll to the position
       if (mark == null) {
         return;
       }
-      var top = mark[path];
-      if (!isNaN(top)) {
-        $(function () {
-          $(global.document.documentElement)
-            .animate({ 'scrollTop': top }, 'fast');
+      doScroll(mark[path]);
+      if (trigger === 'auto') {
+        // register beforeunload event
+        global.addEventListener('beforeunload', function () {
+          doSaveScroll(path, mark);
         });
       }
     });
