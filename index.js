@@ -122,17 +122,18 @@
         return false;
       });
 
-      // auto scroll to the position
-      if (mark == null) {
-        return;
-      }
-      doScroll(mark[path]);
+      // register beforeunload event when the trigger is auto
       if (trigger === 'auto') {
         // register beforeunload event
         global.addEventListener('beforeunload', function () {
           doSaveScroll(path, mark);
         });
       }
+      // auto scroll to the position
+      if (mark == null) {
+        return;
+      }
+      doScroll(mark[path]);
     });
   };
 
