@@ -39,7 +39,7 @@
       + 'display:block;'
       + 'position:fixed;'
       + 'color:#222;'
-      + 'font-size:26px;'
+      + 'font-size:26px !important;'
       + 'top:-10px;left:20px;'
       + 'transition:.3s;'
       + '}'
