@@ -111,7 +111,7 @@
     return mark;
   };
 
-  var scrollToMark = function (trigger) {
+  var scrollToMark = function (trigger, hash) {
     var path = global.location.pathname;
     var mark = getBookmark();
     $(function () {
@@ -130,7 +130,8 @@
         });
       }
       // auto scroll to the position
-      if (mark == null) {
+      // and if the page opens with a specific hash, just jump out
+      if (mark == null || global.location.hash === hash) {
         return;
       }
       doScroll(mark[path]);
