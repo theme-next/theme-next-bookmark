@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint index.js",
-    "dist": "uglifyjs --compress --mangle -o bookmark.min.js -- index.js"
+    "dist": "eslint index.js && uglifyjs --compress --mangle -o bookmark.min.js -- index.js"
   },
   "repository": {
     "type": "git",
