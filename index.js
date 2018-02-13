@@ -130,8 +130,13 @@
         });
       }
       // auto scroll to the position
+      if (mark == null) {
+        return;
+      }
       // and if the page opens with a specific hash, just jump out
-      if (mark == null || global.location.hash === hash) {
+      var skips = [hash, '#comment'];
+      // eslint-disable-next-line
+      if (skips.filter(function (h) { return h === global.location.hash }).length > 0) {
         return;
       }
       doScroll(mark[path]);
