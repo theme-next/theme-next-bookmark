@@ -1,6 +1,6 @@
 {
   "name": "theme-next-bookmark",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A plugin of local-bookmarks for NexT theme.",
   "main": "index.js",
   "scripts": {
